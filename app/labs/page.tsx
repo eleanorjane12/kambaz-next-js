@@ -21,5 +21,9 @@ export default function labs() {
          Kambaz </Link> </li>
 
      </ul>
+     <p> Eleanor Collins, Section 02</p><br/>
+     <a href="https://github.com/eleanorjane12/kambaz-next-js">
+       GitHub Repository </a>
+     
    </div>
 );}
