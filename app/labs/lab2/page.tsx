@@ -11,11 +11,25 @@ import Zindex from "./Zindex";
 import Float from "./Float";
 import GridLayout from "./GridLayout";
 import Flex from "./Flex";
+import BootstrapGrids from "./BootstrapGrids";
+import MediaQueriesDemo from "./MediaQueriesDemo";
+import ScreenSizeLabel from "./ScreenSizeLabel";
+import BootstrapTables from "./BootstrapTables"; 
+import BootstrapLists from "./BootstrapLists";
+import BootstrapForms from "./BootstrapForms";
+import BootstrapNavigation from "./BootstrapNavigation";
+import { Container } from "react-bootstrap";
+import Link from "next/link";
 
 export default function Lab2() {
   return (
-    <div id="wd-lab2">
+    <Container>
       <h2>Lab 2 - Cascading Style Sheets</h2>
+      <li>
+       <Link href="/labs/lab2/tailwind" id="wd-tailwind-link">
+         Tailwind </Link>
+     </li>
+
       <h3>Styling with the STYLE attribute</h3>
       <p>
         Style attribute allows configuring look and feel
@@ -73,5 +87,28 @@ Instead of using IDs to refer to elements, you can use an elements CLASS attribu
       <Float />
       <GridLayout />
       <Flex />
+      <MediaQueriesDemo />
 
-    </div> );}
+      <div>
+        <BootstrapGrids />
+      </div>
+      <div>
+        <ScreenSizeLabel />
+      </div>
+      <div>
+        <BootstrapTables />
+      </div>
+        <div> 
+        <BootstrapLists />
+      </div>
+      <div>
+        <BootstrapForms />
+      </div>
+      <div> 
+        <BootstrapNavigation />
+      </div>
+
+      
+
+
+    </Container> );}
