@@ -1,41 +1,78 @@
 import Link from "next/link";
 
+import AssignmentControls from "./assignmentControls";
+import { ListGroup, ListGroupItem } from "react-bootstrap";
+import { BsGripVertical } from "react-icons/bs";
+import LessonControlButtons from "../modules/LessonControlButtons";
+import ModuleControlButtons from "../modules/ModuleControlButtons";
+import AssignmentControlButtons from "./assignmentControlButtons";
+import { MdOutlineAssignment } from "react-icons/md";
+
+
 export default function Assignments() {
  return (
   <div id="wd-assignments">
-   <input placeholder="Search for Assignments"
-          id="wd-search-assignment" />
-   <button id="wd-add-assignment-group">+ Group</button>
-   <button id="wd-add-assignment">+ Assignment</button>
-   <h3 id="wd-assignments-title">
-    ASSIGNMENTS 40% of Total <button>+</button> </h3>
-   <ul id="wd-assignment-list">
-    <li className="wd-assignment-list-item">
-     <Link href="/courses/1234/assignments/123"
-           className="wd-assignment-link" >
-      A1 - ENV + HTML
-     </Link> 
-     <br></br>
-      Multiple modules | <b>Not available until</b> May 6 at 12:00am | <b>Due</b> May 13 at 11:59pm | 100
-      </li>
-    <li className="wd-assignment-list-item">
-      <Link href="/courses/1234/assignments/124"
-           className="wd-assignment-link" >
-      A2 - CSS + BOOTSTRAP
-     </Link> 
-     <br></br>
-      Multiple modules | <b>Not available until</b> May 13 at 12:00am | <b>Due</b> May 20 at 11:59pm | 100
-    </li>
+    <AssignmentControls />
 
-    <li className="wd-assignment-list-item">
-      <Link href="/courses/1234/assignments/125"
-           className="wd-assignment-link">
-      A3 - JAVASCRIPT + REACT
-     </Link> 
-     <br></br>
-      Multiple modules | <b>Not available until</b> May 20 at 12:00am | <b>Due</b> May 27 at 11:59pm | 100
-    </li>
-    
-   </ul>
+    <ListGroup className="rounded-0" id="wd-modules">
+    <ListGroupItem className="wd-module p-0 mb-5 fs-5 border-gray">
+      <div className="wd-title p-3 ps-2 bg-secondary"> 
+        <BsGripVertical className="me-2 fs-3" /> ASSIGNMENTS <AssignmentControlButtons />
+      </div>
+      <ListGroup className="wd-lessons rounded-0">
+        <ListGroupItem className="wd-lesson p-3 ps-1 d-flex align-items-center">
+          <BsGripVertical className="me-2 fs-3" /> 
+          <MdOutlineAssignment className="me-2 fs-3 text-success" /> 
+           <div className="d-flex flex-column">
+             <Link href="/courses/1234/assignments/124"
+              className="text-decoration-none text-dark">
+              <span className="fs-4">A1</span>
+              <div className="fs-6 text-muted"> <span className="text-danger">Multiple modules </span>
+              <span>| <b>Not available until</b> May 6 at 12:00am | <b>Due</b> May 13 at 11:59pm | 100</span></div>
+              </Link>
+            </div>
+          <div className="ms-auto">
+          <LessonControlButtons />
+          </div>
+      </ListGroupItem>
+      <ListGroupItem className="wd-lesson p-3 ps-1 d-flex align-items-center">
+          <BsGripVertical className="me-2 fs-3" /> 
+          <MdOutlineAssignment className="me-2 fs-3 text-success" /> 
+           <div className="d-flex flex-column">
+              <Link href="/courses/1234/assignments/125"
+              className="text-decoration-none text-dark">
+              <span className="fs-4">A2</span>
+              <div className="fs-6 text-muted"> <span className="text-danger">Multiple modules </span>
+              <span>| <b>Not available until</b> May 13 at 12:00am | <b>Due</b> May 20 at 11:59pm | 100</span></div>
+              </Link>
+            </div>
+          <div className="ms-auto">
+          <LessonControlButtons />
+          </div>
+      </ListGroupItem>
+
+      <ListGroupItem className="wd-lesson p-3 ps-1 d-flex align-items-center">
+          <BsGripVertical className="me-2 fs-3" /> 
+          <MdOutlineAssignment className="me-2 fs-3 text-success" /> 
+           <div className="d-flex flex-column">
+              <Link href="/courses/1234/assignments/126"
+              className="text-decoration-none text-dark">
+              <span className="fs-4">A3</span>
+              <div className="fs-6 text-muted"> <span className="text-danger">Multiple modules </span>
+              <span>| <b>Not available until</b> May 20 at 12:00am | <b>Due</b> May 27 at 11:59pm | 100</span></div>
+              </Link>
+            </div>
+          <div className="ms-auto">
+          <LessonControlButtons />
+          </div>
+      </ListGroupItem>
+        
+        
+      </ListGroup>
+    </ListGroupItem>
+   
+  </ListGroup>
+
+   
   </div>
 );}

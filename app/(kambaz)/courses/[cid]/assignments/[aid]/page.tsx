@@ -1,90 +1,105 @@
+import { FormLabel,  FormControl, Col, Row, FormSelect, Form, FormGroup, FormCheck, InputGroup, Button } from "react-bootstrap";
+import InputGroupText from "react-bootstrap/esm/InputGroupText";
+
 export default function AssignmentEditor() {
  return (
     <div id="wd-assignment-editor"> 
-    <h2>Assignment Name</h2>
-    <input id="wd-assignment-name" type="text" size={50} defaultValue="A1 - ENV + HTML"/> <br/>
-    <br/>
-    <textarea id="wd-assignment-description" rows={10} cols={50} defaultValue="This assignment is available online. Submit a link to the landing page
+    <FormLabel> Assignment Name </FormLabel>
+    <FormControl type="text" defaultValue="A1 - ENV + HTML" />
+     <br/> 
+    <FormControl as="textarea" style={{ height: "300px" }} defaultValue="This assignment is available online. Submit a link to the landing page
     of your Web application eunning on Netlify. The landing page should include the following: your full name and section Links to each of the lab 
     assignments Link to the Kanbaz application Links to all relevant source code repositories The Kanbas application should include a link to naviagate
-    back to the landing page.">
-        
-         </textarea>
+    back to the landing page." /> 
     <br/>
     <br/>
+    
     <div id="wd-assignment-details">
-    <label htmlFor="wd-assignment-points">Points:</label>
-    <input id="wd-assignment-points" type="number" size={50} defaultValue="100"/> <br/>
-    <br/>
-    <label  htmlFor="wd-assignment-group"> Assignment Group </label>
-    <select id="wd-select-assignment-group">
-        <option defaultValue="ASSIGNMENTS">ASSIGNMENTS</option>
-        <option value="QUIZZES">QUIZZES</option>
-        <option value="EXAMS">EXAMS</option>
-        <option value="PROJECTS">PROJECTS</option>
-    </select>
-
-    <br/><br/>
-
-    <label  htmlFor="wd-display-grade-as"> Display Grade As </label>
-    <select id="wd-select-display-type">
-        <option value="Percentage">Percentage</option>
-        <option value="Fraction">Fraction</option>
-        <option defaultValue="Letter Grade">Letter Grade</option>
-    </select>
-    <br/><br/>
-
-    <label  htmlFor="wd-online-entry-options"> Online Entry Options </label>
-    <br/>
+    <Row className="mb-3" >
+       <FormLabel column sm={2}> Points </FormLabel>
+       <Col sm={10}>
+           <FormControl type="number" defaultValue="100" />
+       </Col>
+   </Row>
     
-  <input type="checkbox" name="check-entry-option" id="wd-chkbox-txtentry"/>
-<label htmlFor="wd-chkbox-txtentry">Text Entry</label><br/>
+    <Row className="mb-3" > 
+       <FormLabel column sm={2}> Assignment Group </FormLabel>
+       <Col sm={10}>
+    <FormSelect>
+     <option value="0" defaultChecked>ASSIGNMENTS</option>
+     <option value="1">QUIZZES</option>
+     <option value="2">EXAMS</option>
+     <option value="3">PROJECTS</option>
+  </FormSelect>
+    </Col>
+  </Row>
 
-<input type="checkbox" name="check-entry-option" id="wd-chkbox-website"/>
-<label htmlFor="wd-chkbox-website">Website URL</label><br/>
+   <Row className="mb-3" > 
+    <FormLabel column sm={2}> Display Grade As </FormLabel>
+        <Col sm={10}>
+        <FormSelect>
+            <option value="0" defaultChecked>Percentage</option>
+            <option value="1">Fraction</option>
+            <option value="2">Letter Grade</option>
+        </FormSelect>
+    </Col>
+    </Row>
 
-<input type="checkbox" name="check-entry-option" id="wd-chkbox-media"/>
-<label htmlFor="wd-chkbox-media">Media Recordings</label><br/>
+    <Row className="mb-3 " > 
+    <FormLabel column sm={2}> Submission Type </FormLabel>
+     <Col sm={10}>
+        <div className="mb-3 wd-border-gray p-3" >
+            <FormSelect className="mb-4" >
+                <option value="0" defaultChecked>Online</option>
+                <option value="1">In-Person</option>
+            </FormSelect>
+            Online Entry Options
+            <FormCheck className="m-4" type="checkbox" defaultChecked={false} label="Text Entry"/>
+            <FormCheck className="m-4" type="checkbox" defaultChecked={false} label="Website URL"/>
+            <FormCheck className="m-4" type="checkbox" defaultChecked={false} label="Media Recordings"/>
+            <FormCheck className="m-4" type="checkbox" defaultChecked={false} label="Student Annotation"/>
+            <FormCheck className="m-4" type="checkbox" defaultChecked={false} label="File Upload"/>
+        </div>
+        </Col> 
+    </Row>
 
-<input type="checkbox" name="check-entry-option" id="wd-chkbox-annotation"/>
-<label htmlFor="wd-chkbox-annotation">Student Annotation</label><br/>
+    <Row className="mb-3" > 
+    <FormLabel column sm={2}> Asssign </FormLabel>
+     <Col sm={10}>
+        <div className="mb-3 wd-border-gray p-3" >
+           <FormLabel> Assign to </FormLabel>
+           <FormControl type="text" defaultValue="Everyone"/> <br/>
+            <FormLabel> Due </FormLabel>
+            <FormControl type="date" defaultValue="2026-05-13" id="wd-due-date-picker"/>
 
-<input type="checkbox" name="check-entry-option" id="wd-chkbox-fileupload"/>
-<label htmlFor="wd-chkbox-fileupload">File Upload</label><br/>
+           <Row className="mt-3 mb-3">
+            <Col>
+            <FormLabel> Available from </FormLabel>
+            <FormControl type="date" defaultValue="2026-05-13" id="wd-due-date-picker"/>
+            </Col>
+            <Col>
+            <FormLabel> Until </FormLabel>
+            <FormControl type="date" id="wd-until-date-picker"/>
+            </Col>
+           </Row>
 
-
-    <br/><br/>
-
-    <label  htmlFor="wd-assign"> Assign </label>
-    <label  htmlFor="wd-assign-to"> Assign to </label><br />
-    <input id="wd-assign-to-input" type="text" size={50} value="Everyone"/> <br/>
-    <br/>
-    <label  htmlFor="wd-due"> Due </label><br />
+         </div>
+        </Col> 
+    </Row>
     
-    <input type="date"
-       defaultValue="2026-05-13"
-       id="wd-due-date-picker"/><br/>
-       <br/>
-       <div>
-    <label  htmlFor="wd-available"> Available from </label><br />
-    <input type="date"
-       defaultValue="2026-05-06"
-       id="wd-available-date-picker"/><br/>
-       </div>
-       <div>
-    <label  htmlFor="wd-until"> Until </label><br />
-    <input type="date"
-       defaultValue="2026-05-13"
-       id="wd-until-date-picker"/><br/>
-       </div>
-         <br/>
+    
+   
+
+    <Button variant="secondary" size="lg" className="me-1 float-end" id="wd-cancel-assignment">
+       Cancel
+     </Button>
+     <Button variant="danger" size="lg" className="me-1 float-end" id="wd-save-assignment">
+    
+       Save
+     </Button>
+    
+    
     </div>
-    <hr />
-    <button id="wd-cancel-assignment"> Cancel </button>
-    <button id="wd-save-assignment"> Save </button>
-    
-    
-    
     </div>
 
 );}
