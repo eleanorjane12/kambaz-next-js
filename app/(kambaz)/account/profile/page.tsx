@@ -1,13 +1,13 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 "use client";
 import { redirect } from "next/navigation";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setCurrentUser } from "../reducer";
 import { RootState } from "../../store";
-import Link from "next/link";
-import { Button, FormControl, FormSelect } from "react-bootstrap";
+import { Button, FormControl } from "react-bootstrap";
 export default function Profile() {
-   const [profile, setProfile] = useState<any>({});
+ const [profile, setProfile] = useState<any>({});
  const dispatch = useDispatch();
  const { currentUser } = useSelector((state: RootState) => state.accountReducer);
  const fetchProfile = () => {
@@ -21,9 +21,8 @@ export default function Profile() {
  useEffect(() => {
    fetchProfile();
  }, []);
-
-  return (
-    <div className="wd-profile-screen">
+ return (
+   <div className="wd-profile-screen">
      <h3>Profile</h3>
      {profile && (
        <div>
@@ -59,4 +58,3 @@ export default function Profile() {
      )}
    </div>
 );}
-

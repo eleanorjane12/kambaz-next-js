@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
 import * as db from "../database";
 import { RootState } from "../store";
@@ -34,7 +35,7 @@ export default function Dashboard() {
       <br />
       <FormControl value={course.name} className="mb-2" 
       onChange={(e) => setCourse({ ...course, name: e.target.value }) }/>
-      <FormControl value={course.description} rows={3} 
+      <FormControl as="textarea" value={course.description} rows={3} 
       onChange={(e) => setCourse({ ...course, description: e.target.value }) }/>
 <hr />
    <h2 id="wd-dashboard-published">Published Courses ({courses.length})</h2> <hr />
@@ -42,9 +43,9 @@ export default function Dashboard() {
    <div id="wd-dashboard-courses">
     <Row xs={1} md={5} className="g-4">
      {courses.filter((course) =>
-      enrollments.some(
+       currentUser && enrollments.some(
         (enrollment) =>
-          enrollment.user === currentUser._id &&
+          enrollment.user === (currentUser as any)._id &&
           enrollment.course === course._id
          ))
 .map((course) => (
