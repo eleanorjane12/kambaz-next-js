@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { ReactNode } from "react";
 import CourseNavigation from "./Navigation";
 import { FaAlignJustify } from "react-icons/fa";
-import { courses } from "../../database";
+
 import { useSelector } from "react-redux";
 import { useParams } from "next/navigation";
 import { RootState } from "../../store";

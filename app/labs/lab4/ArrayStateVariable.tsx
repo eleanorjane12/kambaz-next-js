@@ -1,9 +1,9 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+"use client";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "./store";
 import { ListGroup, ListGroupItem } from "react-bootstrap";
-
+import TodoItem, { Todo } from "./redux/todos/TodoItem";
 export default function ArrayStateVariable() {
 const { todos } = useSelector((state: RootState) => state.todosReducer);
  const [array, setArray] = useState([1, 2, 3, 4, 5]);
@@ -19,7 +19,7 @@ const deleteElement = (index: number) => {
    <button onClick={addElement}>Add Element</button>
    <ul>
     <ListGroup>
-        {todos.map((todo: any) => (
+        {todos.map((todo: Todo) => (
           <ListGroupItem key={todo.id}>
             {todo.title}
           </ListGroupItem>

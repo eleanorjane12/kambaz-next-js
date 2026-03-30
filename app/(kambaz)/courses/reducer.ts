@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { createSlice } from "@reduxjs/toolkit";
-import { courses } from "../database";
+import { courses}  from "../database";
 import { v4 as uuidv4 } from "uuid";
 const initialState = {
  courses: courses,
@@ -27,6 +29,6 @@ const coursesSlice = createSlice({
    },
  },
 });
-export const { addNewCourse, deleteCourse, updateCourse } =
+export const { addNewCourse, deleteCourse, updateCourse, setCourses } =
  coursesSlice.actions;
 export default coursesSlice.reducer;

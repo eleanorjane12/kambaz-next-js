@@ -1,7 +1,7 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+"use client";
 import React from "react";
 import TodoForm from "./TodoForm";
-import TodoItem from "./TodoItem";
+import TodoItem, {Todo} from "./TodoItem";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { ListGroup } from "react-bootstrap";
@@ -12,7 +12,7 @@ export default function TodoList() {
       <h2>Todo List</h2>
       <ListGroup>
         <TodoForm />
-        {todos.map((todo: any) => (
+        {todos.map((todo: Todo) => (
           <TodoItem key={todo.id} todo={todo} />
         ))}
       </ListGroup>

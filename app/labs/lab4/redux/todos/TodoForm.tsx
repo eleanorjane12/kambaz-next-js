@@ -1,4 +1,4 @@
-import React from "react";
+"use client";
 import { useSelector, useDispatch } from "react-redux";
 import { addTodo, updateTodo, setTodo } from "./todosReducer";
 import { RootState } from "../../store";
