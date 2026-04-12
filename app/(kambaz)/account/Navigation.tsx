@@ -12,12 +12,22 @@ export default function AccountNavigation() {
 
  return (
    <Nav variant="pills">
-     {links.map((link) => (
-       <NavItem key={link}>
-         <NavLink as={Link} href={link} active={pathname.endsWith(link)}>
-           {link} </NavLink> </NavItem>
-     ))}
-   </Nav>
+  {links.map((link) => (
+    <NavItem key={link}>
+      <NavLink as={Link} href={link} active={pathname.endsWith(link)}>
+        {link}
+      </NavLink>
+    </NavItem>
+  ))}
+
+  {currentUser && currentUser.role === "ADMIN" && (
+    <NavItem>
+      <NavLink as={Link} href="/account/users" active={pathname.endsWith('users')}>
+        users
+      </NavLink>
+    </NavItem>
+  )}
+</Nav>
 );}
 
 

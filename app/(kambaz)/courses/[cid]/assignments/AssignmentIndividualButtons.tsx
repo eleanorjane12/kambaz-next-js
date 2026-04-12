@@ -1,7 +1,5 @@
 import { FaTrash } from "react-icons/fa";
 import { IoEllipsisVertical } from "react-icons/io5";
-import { BsPlus } from "react-icons/bs";
-import { FaPencil } from "react-icons/fa6";
 import GreenCheckmark from "../modules/GreenCheckmark";
 
 export default function AssignmentIndividualButtons({ assignmentId, deleteAssignment }: { assignmentId: string; deleteAssignment: (assignmentId: string) => void; } ) {
