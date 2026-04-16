@@ -6,7 +6,6 @@ import { useParams } from "next/navigation";
 import AssignmentControls from "./assignmentControls";
 import { ListGroup, ListGroupItem } from "react-bootstrap";
 import { BsGripVertical } from "react-icons/bs";
-import LessonControlButtons from "../modules/LessonControlButtons";
 import AssignmentControlButtons from "./assignmentControlButtons";
 import { MdOutlineAssignment } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
