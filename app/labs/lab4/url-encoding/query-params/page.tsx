@@ -1,23 +1,23 @@
 "use client";
 
 
-import { useSearchParams } from "next/navigation";
+// import { useSearchParams } from "next/navigation";
 
 
 export default function QueryCalculator() {
- const searchParams = useSearchParams();
+ //const searchParams = useSearchParams();
 
 
- const aRaw = searchParams.get("a") || "0";
- const bRaw = searchParams.get("b") || "0";
+ //const aRaw = searchParams.get("a") || "0";
+ //const bRaw = searchParams.get("b") || "0";
 
 
- const a = parseFloat(aRaw);
- const b = parseFloat(bRaw);
- const sum = a + b;
+// const a = parseFloat(aRaw);
+ //const b = parseFloat(bRaw);
+ //const sum = a + b;
 
 
- return (
+ /*return (
    <div style={{ padding: 40 }}>
      <h1>Calculator – Query Parameters</h1>
 
@@ -33,5 +33,6 @@ export default function QueryCalculator() {
 
      <h2 style={{ color: "green" }}>Sum = {sum}</h2>
    </div>
- );
+ )
+   */
 }
