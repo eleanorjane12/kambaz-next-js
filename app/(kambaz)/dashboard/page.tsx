@@ -49,8 +49,8 @@ export default function Dashboard() {
           enrollment.course === course._id
          ))
 .map((course) => (
-     // eslint-disable-next-line react/jsx-key
-     <Col className="wd-dashboard-course" style={{ width: "300px" }}>
+  
+     <Col key={course._id}className="wd-dashboard-course" style={{ width: "300px" }}>
       <Card>
        <Link href={`/courses/${course._id}/home`}
         className="wd-dashboard-course-link text-decoration-none text-dark" >

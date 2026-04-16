@@ -93,10 +93,10 @@ export default function AssignmentEditor() {
     </Row>
     
 
-    <Button variant="secondary" size="lg" className="me-1 float-end" id="wd-cancel-assignment">
+    <Button variant="secondary" size="lg" className="me-1 float-end" id="wd-cancel-assignment" href={`/courses/${cid}/home`}>
        Cancel
      </Button>
-     <Button variant="danger" size="lg" className="me-1 float-end" id="wd-save-assignment">
+     <Button variant="danger" size="lg" className="me-1 float-end" id="wd-save-assignment" href={`/courses/${cid}/home`}>
     
        Save
      </Button>
