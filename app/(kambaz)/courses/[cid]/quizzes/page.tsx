@@ -1,0 +1,86 @@
+"use client"
+
+import Link from "next/link";
+import { useParams } from "next/navigation";
+import { useState, useEffect } from "react";
+import { ListGroup, ListGroupItem } from "react-bootstrap";
+import { BsGripVertical } from "react-icons/bs";
+import { MdOutlineAssignment } from "react-icons/md";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../../store";
+import * as client from "../../client";
+import { addQuiz, editQuiz, updateQuiz, deleteQuiz, setQuizzes } from "./reducer";
+
+
+export default function Quizzes() {
+const { cid } = useParams();
+  const dispatch = useDispatch();
+  const { quizzes } = useSelector((state: RootState) => state.quizzesReducer);
+
+  const [quizName, setQuizName] = useState("");
+
+  const fetchQuizzes = async () => {
+      // const assignments = await client.findAssignmentsForCourse(cid as string);
+      // dispatch(setAssignments(assignments));
+    };
+    const onCreateQuizForCourse = async () => {
+      // if (!cid) return;
+      // const newAssignment = { name: assignmentName, course: cid };
+      // const mod = await client.createAssignmentForCourse(cid as string, newAssignment);
+      // dispatch(setAssignments([...assignments, mod]));
+    };
+     const onRemoveQuiz = async (quizId: string) => {
+      // await client.deleteQuiz(quizId);
+      // dispatch(setQuizzes(quizzes.filter((q: any) => q._id !== quizId)));
+    };
+
+    
+    useEffect(() => {
+    fetchQuizzes();
+  }, []);
+  
+
+ return (
+  <div id="wd-assignments" >
+    
+    <ListGroup className="rounded-0" id="wd-modules">
+    <ListGroupItem className="wd-module p-0 mb-5 fs-5 border-gray">
+      <div className="wd-title p-3 ps-2 bg-secondary"> 
+        <BsGripVertical className="me-2 fs-3" /> Quizzes 
+      </div>
+      
+<ListGroup className="rounded-0">
+       {quizzes.map((quiz: any) => (
+  <ListGroupItem key={quiz._id} className="wd-lesson p-3 ps-1 d-flex align-items-center" >
+    <BsGripVertical className="me-2 fs-3" />
+    <MdOutlineAssignment className="me-2 fs-3 text-success" />
+
+    <div className="d-flex flex-column">
+      <Link href={`/courses/${cid}/quizzes/${quiz._id}`}
+        className="text-decoration-none text-dark" >
+
+        <span className="fs-4">{quiz.title} </span>
+        <div className="fs-6 text-muted">
+          
+          <span>| <b>Not available until</b> {quiz.available_from} | <b>Due</b> {quiz.due} | {quiz.points}</span>
+        </div>
+      </Link>
+
+    </div>
+
+    <div className="ms-auto">
+      
+    </div>
+    </ListGroupItem>
+))}
+
+  </ListGroup>
+
+  </ListGroupItem>  
+  </ListGroup>
+
+   
+  </div>
+);
+}
+
