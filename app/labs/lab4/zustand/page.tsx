@@ -1,3 +1,4 @@
+"use client"
 import ZustandCounter from "./counter";
 import { Provider } from "react-redux";
 import store from "../store";
