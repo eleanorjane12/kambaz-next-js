@@ -2,6 +2,7 @@
 {
   "_id": "quiz-1",
   "title": "Batman Quiz",
+  "description" : "This is a quiz all about Batman",
   "cid": "RS101",
   "quizType": "Graded Quiz",
   "points": 100,

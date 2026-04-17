@@ -73,6 +73,7 @@ export default function QuizDetails() {
       <div className="p-5">
         <h2>{quiz.title}</h2>
         <hr/>
+        <p>{quiz.description}</p>
         <p><button className="btn btn-danger mt-3">Start Quiz</button></p>
       </div>
     );
@@ -82,7 +83,7 @@ export default function QuizDetails() {
       <div className="d-flex justify-content-center gap-2 mb-4">
         <button onClick={() => router.push(`/courses/${cid}/quizzes/${qid}/preview`)}
           className="btn btn-secondary">Preview</button>
-        <button onClick={() => router.push(`/courses/${cid}/quizzes/${qid}/edit`)}
+        <button onClick={() => router.push(`/courses/${cid}/quizzes/${qid}/quiz-editor`)}
           className="btn btn-secondary">Edit</button>
       </div>
 
