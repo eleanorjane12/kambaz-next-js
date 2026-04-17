@@ -37,6 +37,11 @@ export const findQuizById = async (quizId: string) => {
   return response.data;
 };
 
+export const findQuizzesByPartialName = async (name: string) => {
+  const response = await axios.get(`${QUIZZES_API}?name=${name}`);
+  return response.data;
+};
+
 //Module Functions
 export const deleteModule = async (courseId: string, moduleId: string) => {
  const response = await axiosWithCredentials.delete(`${COURSES_API}/${courseId}/modules/${moduleId}`);

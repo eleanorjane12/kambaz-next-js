@@ -15,7 +15,7 @@ export default function QuizDetails() {
     const { qid } = useParams();
     const { currentUser } = useSelector((state: RootState) => state.accountReducer as any);
     const router = useRouter();
-    const isFaculty = currentUser?.role === "faculty";
+    const isFaculty = currentUser?.role === "FACULTY";
     const [quiz, setQuiz] = useState<any>({
     _id: uuidv4(),
     quizType: "Graded Quiz",
@@ -72,10 +72,11 @@ export default function QuizDetails() {
     return (
       <div className="p-5">
         <h2>{quiz.title}</h2>
+        <hr/>
         <p><button className="btn btn-danger mt-3">Start Quiz</button></p>
       </div>
     );
-  }
+  } else {
   return (
     <div className="p-4">
       <div className="d-flex justify-content-center gap-2 mb-4">
@@ -163,6 +164,6 @@ export default function QuizDetails() {
       </div>
 
       
-  )
-
+  );
+  }
 }

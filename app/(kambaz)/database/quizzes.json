@@ -1,0 +1,23 @@
+[
+{
+  "_id": "quiz-1",
+  "title": "Batman Quiz",
+  "cid": "RS101",
+  "quizType": "Graded Quiz",
+  "points": 100,
+  "assignmentGroup": "Quizzes",
+  "shuffleAnswers": true,
+  "timeLimit": 20,
+  "multipleAttempts": false,
+  "howManyAttempts": 1,
+  "showCorrectAnswers": "After Due Date",
+  "accessCode": "",
+  "oneQuestionAtATime": true,
+  "webcamRequired": false,
+  "lockQuestionsAfterAnswering": false,
+  "dueDate": "2024-05-13T23:59:00.000Z",
+  "availableDate": "2024-05-06T00:00:00.000Z",
+  "untilDate": "2024-05-14T23:59:00.000Z",
+  "published": true
+ }
+]

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
 
 import Link from "next/link";
@@ -21,8 +22,8 @@ const { cid } = useParams();
   const [quizName, setQuizName] = useState("");
 
   const fetchQuizzes = async () => {
-      // const assignments = await client.findAssignmentsForCourse(cid as string);
-      // dispatch(setAssignments(assignments));
+      const quizzes = await client.findQuizzesForCourse(cid as string);
+      dispatch(setQuizzes(quizzes));
     };
     const onCreateQuizForCourse = async () => {
       // if (!cid) return;
@@ -34,15 +35,16 @@ const { cid } = useParams();
       // await client.deleteQuiz(quizId);
       // dispatch(setQuizzes(quizzes.filter((q: any) => q._id !== quizId)));
     };
+
     const [name, setName] = useState("");
       const filterQuizzesByName = async (name: string) => {
-        // setName(name);
-        // if (name) {
-        //   const users = await client.findQuizzesByPartialName(name);
-        //   setQuizzes(quizzes);
-        // } else {
-        //   fetchQuizzes();
-        // }
+         setName(name);
+         if (name) {
+           const quizzes = await client.findQuizzesByPartialName(name);
+          setQuizzes(quizzes);
+         } else {
+           fetchQuizzes();
+         }
       };
 
     
@@ -83,7 +85,7 @@ const { cid } = useParams();
         <span className="fs-4">{quiz.title} </span>
         <div className="fs-6 text-muted">
           
-          <span>| <b>Not available until</b> {quiz.available_from} | <b>Due</b> {quiz.due} | {quiz.points}</span>
+          <span> <b>Available Until</b> {quiz.untilDate} | <b>Due</b> {quiz.dueDate} | {quiz.points}</span>
         </div>
       </Link>
 
