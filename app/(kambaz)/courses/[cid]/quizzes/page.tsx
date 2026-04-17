@@ -3,13 +3,14 @@
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useState, useEffect } from "react";
-import { ListGroup, ListGroupItem } from "react-bootstrap";
+import { Button, FormControl, ListGroup, ListGroupItem } from "react-bootstrap";
 import { BsGripVertical } from "react-icons/bs";
 import { MdOutlineAssignment } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store";
 import * as client from "../../client";
 import { addQuiz, editQuiz, updateQuiz, deleteQuiz, setQuizzes } from "./reducer";
+import { FaPlus } from "react-icons/fa6";
 
 
 export default function Quizzes() {
@@ -33,6 +34,16 @@ const { cid } = useParams();
       // await client.deleteQuiz(quizId);
       // dispatch(setQuizzes(quizzes.filter((q: any) => q._id !== quizId)));
     };
+    const [name, setName] = useState("");
+      const filterQuizzesByName = async (name: string) => {
+        // setName(name);
+        // if (name) {
+        //   const users = await client.findQuizzesByPartialName(name);
+        //   setQuizzes(quizzes);
+        // } else {
+        //   fetchQuizzes();
+        // }
+      };
 
     
     useEffect(() => {
@@ -41,9 +52,19 @@ const { cid } = useParams();
   
 
  return (
-  <div id="wd-assignments" >
-    
-    <ListGroup className="rounded-0" id="wd-modules">
+  <div id="wd-quizzes" >
+    <div id="headerbar">
+      <FormControl onChange={(e) => filterQuizzesByName(e.target.value)} placeholder="Search quizzes"
+             className="float-start w-25 me-2 ms-2 mt-2 wd-filter-by-name" />
+             <Button variant="danger" size="lg" className="me-4 float-end" id="wd-add-quiz-btn" >
+       <FaPlus className="position-relative me-2" style={{ bottom: "1px" }} />
+       Quiz
+     </Button>
+     <br /><br />
+    </div>
+ <hr className="me-4"/>
+    <div>
+    <ListGroup className="rounded-0 me-4 " id="wd-modules">
     <ListGroupItem className="wd-module p-0 mb-5 fs-5 border-gray">
       <div className="wd-title p-3 ps-2 bg-secondary"> 
         <BsGripVertical className="me-2 fs-3" /> Quizzes 
@@ -78,6 +99,7 @@ const { cid } = useParams();
 
   </ListGroupItem>  
   </ListGroup>
+  </div>
 
    
   </div>

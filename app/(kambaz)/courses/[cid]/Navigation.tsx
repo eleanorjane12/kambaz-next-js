@@ -2,9 +2,7 @@
 import Link from "next/link";
 import { useParams, usePathname } from "next/navigation";
 import * as db from "../../database";
-import Modules from "./modules/page";
 import Breadcrumb from "./Breadcrumb";
-import { link } from "fs";
 
 export default function CourseNavigation() {
 
