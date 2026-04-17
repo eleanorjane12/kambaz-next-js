@@ -89,10 +89,10 @@ export default function QuizDetails() {
 
       <table className="table">
         <tbody>
-            <tr>
+            <tbody>
                 <th>Quiz Title</th>
-                <td>{quiz.title}</td>
-            </tr>
+                <td>{quiz.title}</td> 
+            </tbody>
             <tr>
                 <th>Quiz Type</th>
                 <td>{quiz.quizType}</td>
@@ -123,8 +123,42 @@ export default function QuizDetails() {
                   <td>{quiz.howManyAttempts}</td>
               </tr>
             )}
+            <tr>    
+                <th>Show Correct Answers</th>
+                <td>{quiz.showCorrectAnswers}</td>
+            </tr>
+            <tr>
+                <th>Access Code</th>
+                <td>{quiz.accessCode || "None"}</td>
+            </tr>
+            
+            <tr>
+                <th>One Question at a Time</th>
+                <td>{quiz.oneQuestionAtATime ? "Yes" : "No"}</td>
+            </tr>
+            <tr>
+                <th>Webcam Required</th>
+                <td>{quiz.webcamRequired ? "Yes" : "No"}</td>
+            </tr>
+            <tr>
+                <th>Lock Questions After Answering</th>
+                <td>{quiz.lockQuestionsAfterAnswering ? "Yes" : "No"}</td>
+            </tr>
+            <tr>
+                <th>Available Date</th>
+                <td>{quiz.availableDate || "Not set"}</td>
+            </tr>
+            <tr>
+                <th>Due Date</th>
+                <td>{quiz.dueDate || "Not set"}</td>
+            </tr>
+            <tr>
+                <th>Until Date</th>
+                <td>{quiz.untilDate || "Not set"}</td>
+            </tr>
             </tbody>
       </table>
+
 
       </div>
 
