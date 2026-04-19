@@ -3,7 +3,7 @@
 "use client"
 import { RootState } from "@reduxjs/toolkit/query";
 import { useParams } from "next/navigation";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { FormLabel, FormControl, Row, Col, FormSelect, FormCheck, Button } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
@@ -13,8 +13,7 @@ import { v4 as uuidv4 } from "uuid";
 
 
 export default function QuizDetailsEditor() {
-  const { cid } = useParams();
-  const { qid } = useParams();
+  const { cid, qid } = useParams();
   const router = useRouter();
 
     const [quiz, setQuiz] = useState<any>({
@@ -66,7 +65,7 @@ const onSave = async () => {
     <div  id="wd-quiz-editor"> 
         <div key={quiz._id}>
     <FormLabel> Quiz Name </FormLabel>
-    <FormControl type="text" value={quiz.title}  onChange={(e) => setQuiz({ ...quiz, title: e.target.value })}/>
+    <FormControl type="text" defaultValue={quiz.title}  onChange={(e) => setQuiz({ ...quiz, title: e.target.value })}/>
      <br/>  
     <FormControl as="textarea" style={{ height: "300px" }} value={quiz.description}  onChange={(e) => setQuiz({ ...quiz, description: e.target.value })}/> 
     <br/>
@@ -81,6 +80,17 @@ const onSave = async () => {
    </Row>
     
     <Row className="mb-3" > 
+       <FormLabel column sm={2}> Quiz Type </FormLabel>
+       <Col sm={10}>
+    <FormSelect>
+     <option value="0" defaultChecked>GRADED QUIZ</option>
+     <option value="1">PRACTICE QUIZ</option>
+     <option value="2">GRADED SURVEY</option>
+     <option value="3">UNGRADED SURVEY</option>
+  </FormSelect>
+    </Col>
+  </Row>
+  <Row className="mb-3" > 
        <FormLabel column sm={2}> Assignment Group </FormLabel>
        <Col sm={10}>
     <FormSelect>
@@ -101,6 +111,23 @@ const onSave = async () => {
             <option value="2">Letter Grade</option>
         </FormSelect>
     </Col>
+    </Row>
+
+    <Row>
+      <FormLabel htmlFor="wd-quiz-shuffle-answers" column sm={2}>Options</FormLabel>
+       <Col sm={10}>
+       <div className="mb-3 p-3">
+      <FormCheck type="checkbox" id="wd-quiz-shuffle-answers"
+        defaultChecked={quiz.shuffleAnswers}
+        onChange={(e) => setQuiz({ ...quiz, shuffleAnswers: e.target.checked })} label="Shuffle Answers"/>
+      <FormCheck type="checkbox" id="wd-quiz-time-limit"
+        defaultChecked={quiz.shuffleAnswers}
+        onChange={(e) => setQuiz({ ...quiz, shuffleAnswers: e.target.checked })} label="Shuffle Answers"/>
+      
+      </div>
+
+</Col>
+
     </Row>
 
     <Row className="mb-3" > 
@@ -126,6 +153,8 @@ const onSave = async () => {
          </div>
         </Col> 
     </Row>
+
+    
     
 
     <Button variant="secondary" size="lg" className="me-1 float-end" id="wd-cancel-quiz" href={`/courses/${cid}/quizzes`} >
