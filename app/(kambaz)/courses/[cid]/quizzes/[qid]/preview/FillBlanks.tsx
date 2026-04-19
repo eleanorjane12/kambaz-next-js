@@ -8,7 +8,7 @@ export default function FillBlanksQuestion({ question, index }: { question: any;
     const [selected, setSelected] = useState<string | null>(null);
 
   return (
-  <div key={question._id} className="p-3 wd-border-gray mt-5"> 
+  <div key={question._id} className="p-3"> 
     <div className="fill-gray"> 
         <span>({index + 1}) {question.title} </span>
     </div>

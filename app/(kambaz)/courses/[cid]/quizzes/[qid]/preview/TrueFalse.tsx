@@ -8,22 +8,26 @@ export default function TrueFalseQuestion({ question, index }: { question: any; 
     const [selected, setSelected] = useState<string | null>(null);
 
   return (
-  <div key={question._id} className="p-3 wd-border-gray mt-5"> 
+  <div key={question._id} className="p-3 "> 
     <div className="fill-gray"> 
         <span>({index + 1}) {question.title} </span>
     </div>
     <div> {question.questionText} </div>
-    {question.choices.map((option: any) => (
-    <div key={option} className="p-3 "> 
+
+    <div key={question.options} className="p-3 "> 
     <div className="fill-gray"> 
 
     <FormCheck type="checkbox" 
-    name={question._id} label={option} checked={selected === option} 
-    onChange={() => setSelected(option === selected ? null : option)}/>
+    name={question._id} label="True" checked={selected === "True"} 
+    onChange={() => setSelected("True")}/>
+    <FormCheck type="checkbox" className="mt-2"
+    name={question._id} label="False" checked={selected === "False"} 
+    onChange={() => setSelected("False")}/>
+
     </div>
     
     </div>
-  ))}
+
 
     </div>
     
