@@ -8,7 +8,7 @@ export default function MultipleChoiceEditor({ question, onChange }: { question:
       <textarea className="form-control mb-3" rows={3} placeholder="Question text"
         value={question.question}
         onChange={(e) => onChange({ ...question, question: e.target.value })} />
-      <label className="fw-bold mb-2">Choices:</label>
+      <label className="fw-bold mb-2">Answers:</label>
 
       {question.choices?.map((choice: string, i: number) => (
         <div key={i} className="d-flex align-items-center gap-2 mb-2">

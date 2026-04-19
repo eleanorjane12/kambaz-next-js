@@ -6,6 +6,7 @@ import { FaPlus } from "react-icons/fa6";
 import * as client from "../../../client";
 import { v4 as uuidv4 } from "uuid";
 import MultipleChoiceEditor from "./questions/MultipleChoiceEditor";
+import TrueFalseEditor from "./questions/TrueFalseEditor";
 
 export default function QuizQuestionsEditor() {
   const { cid, qid } = useParams();
@@ -38,8 +39,6 @@ export default function QuizQuestionsEditor() {
   const onSave = async () => {
     router.push(`/courses/${cid}/quizzes`);
   };
-
-  const mcqDirections = "Enter your question and multiple answers, then select one correct answer.";
 
   return (
     <div id="wd-quiz-questions-editor" className="p-3">
@@ -74,6 +73,11 @@ export default function QuizQuestionsEditor() {
 
               {q.type === "multiple_choice" && (
                 <MultipleChoiceEditor question={q}
+                  onChange={(updated: any) => updateQuestion(q._id, updated)} />
+              )}
+
+              {q.type === "true_false" && (
+                <TrueFalseEditor question={q}
                   onChange={(updated: any) => updateQuestion(q._id, updated)} />
               )}
 
