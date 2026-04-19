@@ -4,7 +4,7 @@ import { useState } from "react";
 import { FormCheck } from "react-bootstrap";
 
 
-export default function MultipleChoiceQuestion({ question, index }: { question: any; index: number }) {
+export default function TrueFalseQuestion({ question, index }: { question: any; index: number }) {
     const [selected, setSelected] = useState<string | null>(null);
 
   return (
@@ -17,7 +17,7 @@ export default function MultipleChoiceQuestion({ question, index }: { question: 
     <div key={option} className="p-3 "> 
     <div className="fill-gray"> 
 
-    <FormCheck type="radio" 
+    <FormCheck type="checkbox" 
     name={question._id} label={option} checked={selected === option} 
     onChange={() => setSelected(option === selected ? null : option)}/>
     </div>

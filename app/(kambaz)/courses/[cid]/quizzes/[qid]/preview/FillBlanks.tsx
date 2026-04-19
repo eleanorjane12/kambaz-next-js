@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { useState } from "react";
-import { FormCheck } from "react-bootstrap";
+import { FormCheck, FormControl, FormLabel } from "react-bootstrap";
 
 
-export default function MultipleChoiceQuestion({ question, index }: { question: any; index: number }) {
+export default function FillBlanksQuestion({ question, index }: { question: any; index: number }) {
     const [selected, setSelected] = useState<string | null>(null);
 
   return (
@@ -16,10 +16,11 @@ export default function MultipleChoiceQuestion({ question, index }: { question: 
     {question.choices.map((option: any) => (
     <div key={option} className="p-3 "> 
     <div className="fill-gray"> 
+        <FormLabel>{option}</FormLabel>
+        <FormControl type="text" value={selected || ""} 
+        onChange={(e) => setSelected(e.target.value)} />
 
-    <FormCheck type="radio" 
-    name={question._id} label={option} checked={selected === option} 
-    onChange={() => setSelected(option === selected ? null : option)}/>
+   
     </div>
     
     </div>
