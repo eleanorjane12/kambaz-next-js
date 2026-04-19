@@ -1,0 +1,13 @@
+[
+{
+    "_id": "01",
+    "quizId": "quiz-1",
+    "questionType": "Multiple Choice",
+    "questionText": "first question!",
+    "points": 10,
+    "options": 
+    {
+      },
+    "correctAnswer": "1"
+}
+]

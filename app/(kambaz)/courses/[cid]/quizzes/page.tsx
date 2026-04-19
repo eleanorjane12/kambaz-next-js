@@ -10,7 +10,7 @@ import { MdOutlineAssignment } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store";
 import * as client from "../../client";
-import { addQuiz, editQuiz, updateQuiz, deleteQuiz, setQuizzes } from "./reducer";
+import { setQuizzes } from "./reducer";
 import { FaPlus } from "react-icons/fa6";
 
 
@@ -19,22 +19,12 @@ const { cid } = useParams();
   const dispatch = useDispatch();
   const { quizzes } = useSelector((state: RootState) => state.quizzesReducer);
 
-  const [quizName, setQuizName] = useState("");
 
   const fetchQuizzes = async () => {
       const quizzes = await client.findQuizzesForCourse(cid as string);
       dispatch(setQuizzes(quizzes));
     };
-    const onCreateQuizForCourse = async () => {
-      // if (!cid) return;
-      // const newAssignment = { name: assignmentName, course: cid };
-      // const mod = await client.createAssignmentForCourse(cid as string, newAssignment);
-      // dispatch(setAssignments([...assignments, mod]));
-    };
-     const onRemoveQuiz = async (quizId: string) => {
-      // await client.deleteQuiz(quizId);
-      // dispatch(setQuizzes(quizzes.filter((q: any) => q._id !== quizId)));
-    };
+    
 
     const [name, setName] = useState("");
       const filterQuizzesByName = async (name: string) => {

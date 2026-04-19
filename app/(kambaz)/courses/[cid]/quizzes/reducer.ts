@@ -16,7 +16,6 @@ const quizzesSlice = createSlice({
     addQuiz: (state, { payload: quiz }) => {
       const newQuiz: any = {
         _id: uuidv4(),
-        lessons: [],
         name: quiz.name,
         course: quiz.course,
       };
