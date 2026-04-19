@@ -7,6 +7,7 @@ import * as client from "../../../client";
 import { v4 as uuidv4 } from "uuid";
 import MultipleChoiceEditor from "./questions/MultipleChoiceEditor";
 import TrueFalseEditor from "./questions/TrueFalseEditor";
+import FillBlanksEditor from "./questions/FillBlanksEditor";
 
 export default function QuizQuestionsEditor() {
   const { cid, qid } = useParams();
@@ -78,6 +79,11 @@ export default function QuizQuestionsEditor() {
 
               {q.type === "true_false" && (
                 <TrueFalseEditor question={q}
+                  onChange={(updated: any) => updateQuestion(q._id, updated)} />
+              )}
+
+              {q.type === "fill_in_blank" && (
+                <FillBlanksEditor question={q}
                   onChange={(updated: any) => updateQuestion(q._id, updated)} />
               )}
 
