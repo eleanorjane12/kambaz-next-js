@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 "use client";
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useEffect } from "react";
@@ -12,34 +13,81 @@ import FillBlanksEditor from "./questions/FillBlanksEditor";
 export default function QuizQuestionsEditor() {
   const { cid, qid } = useParams();
   const router = useRouter();
-  const [questions, setQuestions] = useState<any[]>([]);
 
-  const totalPoints = questions.reduce((sum: number, q: any) => sum + (q.points || 0), 0);
+
+  const [quiz, setQuiz] = useState<any>({
+    _id: uuidv4(),
+    quizType: "Graded Quiz",
+    points: 0,
+    assignmentGroup: "Quizzes",
+    shuffleAnswers: true,
+    timeLimit: 20,
+    multipleAttempts: false,
+    howManyAttempts: 1,
+    showCorrectAnswers: "",
+    accessCode: "",
+    oneQuestionAtATime: true,
+    webcamRequired: false,
+    lockQuestionsAfterAnswering: false,
+    dueDate: "",
+    availableDate: "",
+    untilDate: "",
+    published: false,
+    questions: [],
+  });
+  
+
+  const totalPoints = quiz.questions.reduce((sum: number, q: any) => sum + (q.points || 0), 0);
 
   const addQuestion = () => {
-    setQuestions([...questions, {
-      _id: uuidv4(),
-      type: "multiple_choice",
-      title: "New Question",
-      points: 1,
-      question: "",
-      choices: ["Option 1", "Option 2", "Option 3", "Option 4"],
-      correctAnswer: "Option 1",
-      editing: true,
-    }]);
+  const newQuestion = {
+    _id: uuidv4(),
+    type: "multiple_choice",
+    title: "New Question",
+    points: 1,
+    question: "",
+    choices: ["Option 1", "Option 2", "Option 3", "Option 4"],
+    correctAnswer: "Option 1",
+    editing: true,
   };
+  setQuiz({ ...quiz, questions: [...quiz.questions, newQuestion] });
+};
 
-  const updateQuestion = (id: string, updates: any) => {
-    setQuestions(questions.map((q) => q._id === id ? { ...q, ...updates } : q));
-  };
 
-  const deleteQuestion = (id: string) => {
-    setQuestions(questions.filter((q) => q._id !== id));
-  };
 
-  const onSave = async () => {
-    router.push(`/courses/${cid}/quizzes`);
-  };
+const updateQuestion = (id: string, updates: any) => {
+  setQuiz({
+    ...quiz,
+    questions: quiz.questions.map((q: any) => q._id === id ? { ...q, ...updates } : q)
+  });
+};
+
+const deleteQuestion = (id: string) => {
+  setQuiz({
+    ...quiz,
+    questions: quiz.questions.filter((q: any) => q._id !== id)
+  });
+};
+
+const onSave = async () => {
+  if (qid && qid !== "new") {
+    await client.updateQuiz(quiz);
+  } else {
+    await client.createQuiz(cid as string, quiz);
+  }
+  router.push(`/courses/${cid}/quizzes`);
+};
+
+const fetchQuiz = async () => {
+  if (qid && qid !== "new") {
+    const data = await client.findQuizById(qid as string);
+    if (data) setQuiz({ ...data, questions: data.questions || [] });
+  }
+};
+
+useEffect(() => {
+  fetchQuiz();
+}, [qid]);
 
   return (
     <div id="wd-quiz-questions-editor" className="p-3">
@@ -50,7 +98,7 @@ export default function QuizQuestionsEditor() {
         </button>
       </div>
 
-      {questions.map((q) => (
+      {quiz.questions.map((q: any) => (
         <div key={q._id} className="border rounded p-3 mb-3">
           {q.editing ? (
             <div>

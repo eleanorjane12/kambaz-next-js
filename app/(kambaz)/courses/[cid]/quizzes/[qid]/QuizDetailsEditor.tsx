@@ -1,13 +1,11 @@
 /* eslint-disable react-hooks/set-state-in-effect */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
-import { RootState } from "@reduxjs/toolkit/query";
+import { RootState } from "../../../../store";
 import { useParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { FormLabel, FormControl, Row, Col, FormSelect, FormCheck, Button } from "react-bootstrap";
-import { useSelector, useDispatch } from "react-redux";
-import { setQuizzes } from "../../quizzes/reducer";
 import * as client from "../../../client";
 import { v4 as uuidv4 } from "uuid";
 
@@ -34,6 +32,7 @@ export default function QuizDetailsEditor() {
     availableDate: "",
     untilDate: "",
     published: false,
+    questions: [],
   });
   
 
@@ -44,19 +43,17 @@ export default function QuizDetailsEditor() {
       } 
   };
 
-
   useEffect(() => {
     fetchQuiz();
   }, [qid]);
 
-
 const onSave = async () => {
-    if (qid && qid !== "new") {
-      await client.updateQuiz(quiz);
-    } else {
-      await client.createQuiz(cid as string, quiz);
-    }
-    router.push(`/courses/${cid}/quizzes`);
+  if (qid && qid !== "new") {
+    await client.updateQuiz(quiz);
+  } else {
+    await client.createQuiz(cid as string, quiz);
+  }
+  router.push(`/courses/${cid}/quizzes`);
 };
 
 
@@ -81,7 +78,8 @@ const onSave = async () => {
     <Row className="mb-3" > 
        <FormLabel column sm={2}> Quiz Type </FormLabel>
        <Col sm={10}>
-    <FormSelect>
+    <FormSelect value={quiz.quizType}
+  onChange={(e) => setQuiz({ ...quiz, quizType: e.target.value })}>
      <option value="0" defaultChecked>GRADED QUIZ</option>
      <option value="1">PRACTICE QUIZ</option>
      <option value="2">GRADED SURVEY</option>
@@ -92,7 +90,8 @@ const onSave = async () => {
   <Row className="mb-3" > 
        <FormLabel column sm={2}> Assignment Group </FormLabel>
        <Col sm={10}>
-    <FormSelect>
+    <FormSelect value={quiz.assignmentGroup}
+  onChange={(e) => setQuiz({ ...quiz, assignmentGroup: e.target.value })}>
      <option value="0" defaultChecked>ASSIGNMENTS</option>
      <option value="1">QUIZZES</option>
      <option value="2">EXAMS</option>
@@ -104,7 +103,8 @@ const onSave = async () => {
    <Row className="mb-3" > 
     <FormLabel column sm={2}> Display Grade As </FormLabel>
         <Col sm={10}>
-        <FormSelect>
+        <FormSelect value={quiz.displayGradeAs}
+  onChange={(e) => setQuiz({ ...quiz, displayGradeAs: e.target.value })}>
             <option value="0" defaultChecked>Percentage</option>
             <option value="1">Fraction</option>
             <option value="2">Letter Grade</option>
