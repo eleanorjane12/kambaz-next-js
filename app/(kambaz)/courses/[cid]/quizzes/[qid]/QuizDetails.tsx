@@ -148,15 +148,15 @@ export default function QuizDetails() {
             </tr>
             <tr>
                 <th>Available Date</th>
-                <td>{quiz.availableDate || "Not set"}</td>
+                <td>{quiz.availableDate ? new Date(quiz.availableDate).toLocaleDateString() : "N/A"} |{" "}</td>
             </tr>
             <tr>
                 <th>Due Date</th>
-                <td>{quiz.dueDate || "Not set"}</td>
+                <td>{quiz.dueDate ? new Date(quiz.dueDate).toLocaleDateString() : "N/A"} |{" "}</td>
             </tr>
             <tr>
                 <th>Until Date</th>
-                <td>{quiz.untilDate || "Not set"}</td>
+                <td>{quiz.untilDate ? new Date(quiz.untilDate).toLocaleDateString() : "N/A"} |{" "}</td>
             </tr>
             </tbody>
       </table>
