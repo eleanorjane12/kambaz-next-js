@@ -40,8 +40,7 @@ export default function QuizDetailsEditor() {
   const fetchQuiz = async () => {
       if (qid && qid !== "new") {
          const data = await client.findQuizById(qid as string);
-         const existing = data.find((q: any) => q._id === qid);
-        if (existing) setQuiz(existing);
+        if (data) setQuiz(data);
       } 
   };
 
@@ -62,12 +61,12 @@ const onSave = async () => {
 
 
  return (
-    <div  id="wd-quiz-editor"> 
+    <div  id="wd-quiz-editor" className="ms-4 me-4"> 
         <div key={quiz._id}>
     <FormLabel> Quiz Name </FormLabel>
     <FormControl type="text" defaultValue={quiz.title}  onChange={(e) => setQuiz({ ...quiz, title: e.target.value })}/>
      <br/>  
-    <FormControl as="textarea" style={{ height: "300px" }} value={quiz.description}  onChange={(e) => setQuiz({ ...quiz, description: e.target.value })}/> 
+    <FormControl as="textarea" style={{ height: "300px" }} value={quiz.description} onChange={(e) => setQuiz({ ...quiz, description: e.target.value })}/> 
     <br/>
     <br/>
     
@@ -75,7 +74,7 @@ const onSave = async () => {
     <Row className="mb-3" >
        <FormLabel column sm={2}> Points </FormLabel>
        <Col sm={10}>
-           <FormControl type="number" value={quiz.points} onChange={(e) => setQuiz({ ...quiz, points: e.target.value })} />
+           <FormControl type="number" defaultValue={quiz.points} onChange={(e) => setQuiz({ ...quiz, points: e.target.value })} />
        </Col>
    </Row>
     
@@ -117,14 +116,42 @@ const onSave = async () => {
       <FormLabel htmlFor="wd-quiz-shuffle-answers" column sm={2}>Options</FormLabel>
        <Col sm={10}>
        <div className="mb-3 p-3">
-      <FormCheck type="checkbox" id="wd-quiz-shuffle-answers"
+      <FormCheck type="checkbox"
         defaultChecked={quiz.shuffleAnswers}
         onChange={(e) => setQuiz({ ...quiz, shuffleAnswers: e.target.checked })} label="Shuffle Answers"/>
+      <div className="d-flex align-items-center mt-4">
       <FormCheck type="checkbox" id="wd-quiz-time-limit"
-        defaultChecked={quiz.shuffleAnswers}
-        onChange={(e) => setQuiz({ ...quiz, shuffleAnswers: e.target.checked })} label="Shuffle Answers"/>
-      
+        defaultChecked={!!quiz.timeLimit}
+        onChange={(e) => setQuiz({ ...quiz, timeLimit: 20 })} label="Time Limit"/>
+      <FormControl type="text" defaultValue={quiz.timeLimit} onChange={(e) => setQuiz({ ...quiz, timeLimit: e.target.value })} className="w-25 ms-5"/>
+      <FormLabel className="ms-2 mt-2 "> Minutes </FormLabel>
       </div>
+      <FormCheck type="checkbox" defaultChecked={false} onChange={(e) => setQuiz({ ...quiz, multipleAttempts: e.target.checked })} label="Multiple Attempts" className="mt-4"/>
+
+     <div className="d-flex align-items-center mt-4">
+      <FormCheck type="checkbox" id="wd-quiz-correct-answers"
+        defaultChecked={!!quiz.showCorrectAnswers}
+        onChange={(e) => setQuiz({ ...quiz, showCorrectAnswers: e.target.checked})} label="Show Correct Answers"/>
+      
+      <FormSelect onChange={(e) => setQuiz({ ...quiz, showCorrectAnswers: e.target.value })} className="w-25 ms-5">
+     <option value="0" defaultChecked>After Due Date</option>
+     <option value="1">When Finished</option>
+     <option value="2">After Close Date</option>
+  </FormSelect>
+      </div>
+      
+    <div className="d-flex align-items-center mt-4">
+    <FormLabel className="ms-2 mt-2 "> Access Code </FormLabel>
+    <FormControl type="text" defaultValue={quiz.accessCode} onChange={(e) => setQuiz({ ...quiz, accessCode: e.target.value })} className="w-25 ms-2"/>
+      </div>
+    <FormCheck type="checkbox" 
+      defaultChecked={true}
+      onChange={(e) => setQuiz({ ...quiz, oneQuestionAtATime: e.target.checked })} label="One Question at a Time" className="mt-4 mb-4"/>
+    <FormCheck type="checkbox" 
+      defaultChecked={false}
+      onChange={(e) => setQuiz({ ...quiz, webcamRequired: e.target.checked })} label="Webcam Required"/>
+    
+     </div>
 
 </Col>
 
@@ -137,16 +164,16 @@ const onSave = async () => {
            <FormLabel> Assign to </FormLabel>
            <FormControl type="text" defaultValue="Everyone"/> <br/>
             <FormLabel> Due </FormLabel>
-            <FormControl type="date" value={quiz.dueDate} id="wd-due-date-picker" onChange={(e) => setQuiz({ ...quiz, dueDate: e.target.value })} />
+            <FormControl type="date" value={quiz.dueDate?.slice(0, 10) ?? ""} id="wd-due-date-picker" onChange={(e) => setQuiz({ ...quiz, dueDate: e.target.value })} />
 
            <Row className="mt-3 mb-3">
             <Col>
             <FormLabel> Available from </FormLabel>
-            <FormControl type="date" value={quiz.availableDate} id="wd-available-from-date-picker" onChange={(e) => setQuiz({ ...quiz, availableDate: e.target.value })}/>
+            <FormControl type="date" value={quiz.availableDate?.slice(0, 10) ?? ""} id="wd-available-from-date-picker" onChange={(e) => setQuiz({ ...quiz, availableDate: e.target.value })}/>
             </Col>
             <Col>
             <FormLabel> Until </FormLabel>
-            <FormControl type="date" defaultValue={quiz.untilDate} id="wd-until-date-picker"/>
+            <FormControl type="date" defaultValue={quiz.untilDate?.slice(0, 10) ?? ""} id="wd-until-date-picker"/>
             </Col>
            </Row>
 
@@ -154,13 +181,11 @@ const onSave = async () => {
         </Col> 
     </Row>
 
-    
-    
-
-    <Button variant="secondary" size="lg" className="me-1 float-end" id="wd-cancel-quiz" href={`/courses/${cid}/quizzes`} >
+  
+    <Button variant="secondary" size="lg" className="me-1 float-end mb-4" id="wd-cancel-quiz" href={`/courses/${cid}/quizzes`} >
        Cancel
      </Button>
-     <Button variant="danger" size="lg" className="me-1 float-end" id="wd-save-quiz" href={`/courses/${cid}/quizzes`} onClick={() => onSave()}>
+     <Button variant="danger" size="lg" className="me-1 float-end mb-4" id="wd-save-quiz" href={`/courses/${cid}/quizzes`} onClick={() => onSave()}>
        Save
      </Button>
     

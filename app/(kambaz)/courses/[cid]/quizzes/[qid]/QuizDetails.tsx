@@ -48,25 +48,6 @@ export default function QuizDetails() {
   }, [qid]);
   
 
-//   const handleSave = async () => {
-//     if (qid && qid !== "new") {
-//       await client.updateQuiz(quiz);
-//     } else {
-//       await client.createQuiz(cid as string, quiz);
-//     }
-//     router.push(`/courses/${cid}/quizzes`);
-//   };
-
-
-//   const handleSaveAndPublish = async () => {
-//     const quizToSave = { ...quiz, published: true };
-//     if (qid && qid !== "new") {
-//       await client.updateQuiz(quizToSave);
-//     } else {
-//       await client.createQuiz(cid as string, quizToSave);
-//     }
-//     router.push(`/courses/${cid}/quizzes`);
-//   }
 
   if (!isFaculty) {
     return (
@@ -98,6 +79,10 @@ export default function QuizDetails() {
             <tr>
                 <th>Quiz Type</th>
                 <td>{quiz.quizType}</td>
+            </tr>
+            <tr>
+                <th>Quiz Description</th>
+                <td>{quiz.description}</td>
             </tr>
             <tr>
                 <th>Points</th>
@@ -148,15 +133,15 @@ export default function QuizDetails() {
             </tr>
             <tr>
                 <th>Available Date</th>
-                <td>{quiz.availableDate ? new Date(quiz.availableDate).toLocaleDateString() : "N/A"} |{" "}</td>
+                <td>{(quiz.availableDate?.slice(0, 10) ?? "") || "Not set"}</td>
             </tr>
             <tr>
                 <th>Due Date</th>
-                <td>{quiz.dueDate ? new Date(quiz.dueDate).toLocaleDateString() : "N/A"} |{" "}</td>
+                <td>{(quiz.dueDate?.slice(0, 10) ?? "") || "Not set"}</td>
             </tr>
             <tr>
                 <th>Until Date</th>
-                <td>{quiz.untilDate ? new Date(quiz.untilDate).toLocaleDateString() : "N/A"} |{" "}</td>
+                <td>{(quiz.untilDate?.slice(0, 10) ?? "") || "Not set"}</td>
             </tr>
             </tbody>
       </table>

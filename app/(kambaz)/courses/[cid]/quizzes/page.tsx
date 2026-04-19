@@ -82,14 +82,11 @@ const { cid } = useParams();
       <Link href={`/courses/${cid}/quizzes/${quiz._id}`}
         className="text-decoration-none text-dark" >
 
-<span className="fs-4">{quiz.title}</span>
-<div className="fs-6 text-muted">
-  <span>
-    <b>Available Until</b> {quiz.untilDate ? new Date(quiz.untilDate).toLocaleDateString() : "N/A"} |{" "}
-    <b>Due</b> {quiz.dueDate ? new Date(quiz.dueDate).toLocaleDateString() : "N/A"} |{" "}
-    {quiz.points} pts
-  </span>
-</div>
+        <span className="fs-4">{quiz.title} </span>
+        <div className="fs-6 text-muted">
+          
+          <span> <b>Available Until:</b> {quiz.untilDate?.slice(0, 10) ?? ""} | <b>Due:</b> {quiz.dueDate?.slice(0, 10) ?? ""} | {quiz.points} Points</span>
+        </div>
       </Link>
 
     </div>
