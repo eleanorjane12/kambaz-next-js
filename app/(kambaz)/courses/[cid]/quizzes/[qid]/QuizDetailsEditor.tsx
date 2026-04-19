@@ -13,9 +13,9 @@ import { v4 as uuidv4 } from "uuid";
 export default function QuizDetailsEditor() {
     const { cid } = useParams();
     const { qid } = useParams();
-    const { currentUser } = useSelector((state: RootState) => state.accountReducer as any);
+   
     const dispatch = useDispatch();
-    const { quizzes } = useSelector((state: RootState) => state.quizzesReducer);
+    const { quizzes } = useSelector((state: any) => state.quizzesReducer);
     const [quiz, setQuiz] = useState<any>({
     _id: uuidv4(),
     quizType: "Graded Quiz",
