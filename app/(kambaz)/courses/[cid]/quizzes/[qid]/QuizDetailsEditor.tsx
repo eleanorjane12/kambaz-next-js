@@ -158,7 +158,7 @@ const onSave = async () => {
     </Row>
 
     <Row className="mb-3" > 
-    <FormLabel column sm={2}> Asssign </FormLabel>
+    <FormLabel column sm={2}> Assign </FormLabel>
      <Col sm={10}>
         <div className="mb-3 wd-border-gray p-3" >
            <FormLabel> Assign to </FormLabel>
