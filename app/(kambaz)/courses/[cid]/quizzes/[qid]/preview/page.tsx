@@ -51,7 +51,6 @@ export default function QuizPreview() {
       <div className="p-5">
         <h2>{quiz.title}</h2>
         <hr/>
-        
             <div> 
             <QuizQuestion/>
             </div>

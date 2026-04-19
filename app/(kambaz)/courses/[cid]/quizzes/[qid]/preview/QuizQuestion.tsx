@@ -10,6 +10,7 @@ import { RootState } from "../../../../../store";
 import { useDispatch, useSelector } from "react-redux";
 import { setQuestions } from "./reducer";
 
+
 export default function QuizQuestion() {
 
   const { qid } = useParams();
@@ -28,17 +29,26 @@ export default function QuizQuestion() {
   };
   
     useEffect(() => {
+        
       fetchQuestions();
+      
     }, [qid]);
     
+    console.log("questions in state:", questions, qid);
     return (
-    <div> 
-       
-
-        </div>);
-}
-        
-
+        <div> 
+            
+        {questions.map((question: any, index: number) => (
+    <div key={question._id} className="p-3 wd-border-gray"> 
+    <div className="fill-gray"> 
+        <span>({index + 1}) {question.title} </span>
+    </div>
+    <div> {question.questionText} </div>
+    </div>
+  ))}
+        </div>
+    );
+}  
 
   
 
