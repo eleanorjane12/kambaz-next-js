@@ -1,6 +1,7 @@
 "use client"
 import { Tab, Tabs } from "react-bootstrap";
 import QuizDetailsEditor from "../QuizDetailsEditor";
+import QuizQuestionsEditor from "../QuizQuestionsEditor";
 
 export default function QuizEditor() {
     return (
@@ -9,7 +10,7 @@ export default function QuizEditor() {
         <QuizDetailsEditor/>
     </Tab>
     <Tab eventKey="Questions" className="text-danger" title={"Questions"}>
-    Questions
+        <QuizQuestionsEditor/>
     </Tab>
     </Tabs>
     )

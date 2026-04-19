@@ -9,6 +9,33 @@ const USERS_API = `${HTTP_SERVER}/api/users`;
 const MODULES_API = `${HTTP_SERVER}/api/modules`;
 const ASSIGNMENTS_API = `${HTTP_SERVER}/api/assignments`;
 const QUIZZES_API = `${HTTP_SERVER}/api/quizzes`;
+const QUESTIONS_API = `${HTTP_SERVER}/api/questions`;
+
+// Question functions
+export const createQuestionForQuiz = async (quizId: string, question: any) => {
+  const response = await axiosWithCredentials.post(`${QUIZZES_API}/${quizId}/questions`, question);
+  return response.data;
+};
+
+export const findQuestionsForQuiz = async (quizId: string) => {
+  const response = await axiosWithCredentials.get(`${QUIZZES_API}/${quizId}/questions`);
+  return response.data;
+};
+
+export const updateQuestion = async (question: any) => {
+  const response = await axiosWithCredentials.put(`${QUESTIONS_API}/${question._id}`, question);
+  return response.data;
+};
+
+export const deleteQuestion = async (questionId: string) => {
+  const response = await axiosWithCredentials.delete(`${QUESTIONS_API}/${questionId}`);
+  return response.data;
+};
+
+export const findQuestionById = async (questionId: string) => {
+  const response = await axiosWithCredentials.get(`${QUESTIONS_API}/${questionId}`);
+  return response.data;
+};
 
 
 // Quiz functions
