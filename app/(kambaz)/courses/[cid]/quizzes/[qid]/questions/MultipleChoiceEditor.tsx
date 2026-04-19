@@ -27,10 +27,12 @@ export default function MultipleChoiceEditor({ question, onChange }: { question:
           </button>
         </div>
       ))}
-      <button className="btn btn-outline-secondary btn-sm"
+      <button className="btn btn-outline-secondary btn-md float-end"
         onClick={() => onChange({ ...question, choices: [...question.choices, "New Option"] })}>
-        + Add Choice
+        + Add Another Answer
       </button>
+      <br/>
+      <br/>
     </div>
   );
 }
