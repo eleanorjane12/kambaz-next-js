@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/set-state-in-effect */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
 import { RootState } from "@reduxjs/toolkit/query";
 import { useParams } from "next/navigation";
@@ -11,11 +13,10 @@ import { v4 as uuidv4 } from "uuid";
 
 
 export default function QuizDetailsEditor() {
-    const { cid } = useParams();
-    const { qid } = useParams();
-   
-    const dispatch = useDispatch();
-    const { quizzes } = useSelector((state: any) => state.quizzesReducer);
+  const { cid } = useParams();
+  const { qid } = useParams();
+  const router = useRouter();
+
     const [quiz, setQuiz] = useState<any>({
     _id: uuidv4(),
     quizType: "Graded Quiz",
@@ -40,7 +41,8 @@ export default function QuizDetailsEditor() {
   const fetchQuiz = async () => {
       if (qid && qid !== "new") {
          const data = await client.findQuizById(qid as string);
-        if (data) setQuiz(data);
+         const existing = data.find((q: any) => q._id === qid);
+        if (existing) setQuiz(existing);
       } 
   };
 
@@ -51,23 +53,17 @@ export default function QuizDetailsEditor() {
 
 
 const onSave = async () => {
-    await client.updateQuiz(quiz);
-    dispatch(setQuizzes(quizzes.map((q: any) =>
-      q._id === quiz._id ? quiz : q
-    )));
-  
-};
-
-      const onUpdateQuiz = async (quiz: any) => {
+    if (qid && qid !== "new") {
       await client.updateQuiz(quiz);
-      const newQuizzes = quizzes.map((q: any) => q._id === quiz._id ? quiz : q );
-      dispatch(setQuizzes(newQuizzes));
-      
-    };
+    } else {
+      await client.createQuiz(cid as string, quiz);
+    }
+    router.push(`/courses/${cid}/quizzes`);
+};
 
 
  return (
-    <div  id="wd-assignment-editor"> 
+    <div  id="wd-quiz-editor"> 
         <div key={quiz._id}>
     <FormLabel> Quiz Name </FormLabel>
     <FormControl type="text" value={quiz.title}  onChange={(e) => setQuiz({ ...quiz, title: e.target.value })}/>
