@@ -51,10 +51,7 @@ const fetchAttempts = async () => {
     if (data) setAttempts(data);
   }
 };
-const canTakeQuiz = () => {
-  if (!quiz.multipleAttempts) return attempts.length === 0;
-  return attempts.length < quiz.howManyAttempts;
-};
+
 
   useEffect(() => {
     fetchQuiz();
@@ -63,7 +60,7 @@ const canTakeQuiz = () => {
 
 
 
-  if (!isFaculty && canTakeQuiz()) {
+  if (!isFaculty) {
     return (
       <div className="p-5">
         <h2>{quiz.title}</h2>
