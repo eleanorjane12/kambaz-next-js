@@ -33,4 +33,8 @@ export default function Signin() {
              className="mb-2"/>
       <Button onClick={signin} id="wd-signin-btn" className="w-100" > Sign in </Button>
       <Link id="wd-signup-link" href="/account/signup">Sign up</Link>
+      <br/> <br/>
+      <span > By Eleanor Collins and Kiki Liu </span> <br/>
+      <span> Frontend link: https://github.com/eleanorjane12/kambaz-next-js/tree/quizzes </span>
+      <span> Backend link: https://github.com/eleanorjane12/kambaz-node-server-app/tree/quizzes </span>
     </div> );}
