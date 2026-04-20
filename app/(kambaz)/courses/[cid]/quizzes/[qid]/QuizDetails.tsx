@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import * as client from "../../../client";
 import { RootState } from "../../../../store";
+import { Button, Col, Row } from "react-bootstrap";
 
 
 export default function QuizDetails() {
@@ -42,19 +43,74 @@ export default function QuizDetails() {
     } 
 };
 
+const [attempts, setAttempts] = useState<any[]>([]);
+
+const fetchAttempts = async () => {
+  if (qid && currentUser?._id) {
+    const data = await client.findAttemptsForQuizForStudent(qid as string, currentUser._id);
+    if (data) setAttempts(data);
+  }
+};
+const canTakeQuiz = () => {
+  if (!quiz.multipleAttempts) return attempts.length === 0;
+  return attempts.length < quiz.howManyAttempts;
+};
+
   useEffect(() => {
     fetchQuiz();
+    fetchAttempts();
   }, [qid]);
-  
 
 
-  if (!isFaculty) {
+
+  if (!isFaculty && canTakeQuiz()) {
     return (
       <div className="p-5">
         <h2>{quiz.title}</h2>
         <hr/>
+        <Row>
+          <Col>
+            <span>Total Points: {quiz.points}</span><br/>
+          </Col>
+          <Col>
+            <span>Time Limit: {quiz.timeLimit} minutes</span><br/>
+          </Col>
+           <Col>
+            <span>Multiple Attempts Allowed: {quiz.multipleAttempts ? "Yes" : "No"} </span><br/>
+          </Col>
+          <Col>
+            <span>How Many Attempts: {quiz.howManyAttempts}</span><br/>
+          </Col>
+        </Row>
+        <Row> 
+        {attempts.length > 0 && (
+        <div className="mt-4">
+          <h5>Past Attempts</h5>
+          <table className="table">
+            <thead>
+              <tr>
+                <th>Attempt</th>
+                <th>Date Taken</th>
+                <th>Score</th>
+              </tr>
+            </thead>
+            <tbody>
+              {attempts.map((attempt: any) => (
+                <tr key={attempt._id}>
+                  <td>Attempt {attempt.attemptNumber}</td>
+                  <td>{new Date(attempt.dateTaken).toLocaleDateString()}</td>
+                  <td>{attempt.score} / {quiz.points}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+      </Row>
+        <hr/>
         <p>{quiz.description}</p>
-        <p><button className="btn btn-danger mt-3">Start Quiz</button></p>
+        
+        <p><Button className="btn btn-danger mt-3 justify-content-center" onClick={() => router.push(`/courses/${cid}/quizzes/${qid}/preview`)}>Start Quiz</Button></p>
       </div>
     );
   } else {

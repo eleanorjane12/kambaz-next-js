@@ -10,6 +10,22 @@ const MODULES_API = `${HTTP_SERVER}/api/modules`;
 const ASSIGNMENTS_API = `${HTTP_SERVER}/api/assignments`;
 const QUIZZES_API = `${HTTP_SERVER}/api/quizzes`;
 const QUESTIONS_API = `${HTTP_SERVER}/api/questions`;
+const ATTEMPTS_API = `${HTTP_SERVER}/api`;
+
+
+
+// Attempt functions
+export const createAttemptForQuizForStudent = async (quizId: string, studentId: string, attempt: any) => {
+  const response = await axiosWithCredentials.post(`${ATTEMPTS_API}/users/${studentId}/quizzes/${quizId}/quiz-attempts`, attempt);
+  return response.data;
+};
+
+export const findAttemptsForQuizForStudent = async (quizId: string, studentId: string) => {
+  const response = await axiosWithCredentials.get(
+    `${ATTEMPTS_API}/users/${studentId}/quizzes/${quizId}/quiz-attempts`
+  );
+  return response.data;
+};
 
 // Question functions
 export const createQuestionForQuiz = async (quizId: string, question: any) => {
@@ -71,14 +87,14 @@ export const findQuizzesByPartialName = async (name: string) => {
 
 //Module Functions
 export const deleteModule = async (courseId: string, moduleId: string) => {
- const response = await axiosWithCredentials.delete(`${COURSES_API}/${courseId}/modules/${moduleId}`);
+ const response = await axiosWithCredentials.delete(`${MODULES_API}/${courseId}/modules/${moduleId}`);
  return response.data;
 };
 
 
 export const createModuleForCourse = async (courseId: string, module: any) => {
   const response = await axiosWithCredentials.post(
-    `${COURSES_API}/${courseId}/modules`,
+    `${MODULES_API}/${courseId}/modules`,
     module
   );
   return response.data;
@@ -86,7 +102,7 @@ export const createModuleForCourse = async (courseId: string, module: any) => {
 
 export const findModulesForCourse = async (courseId: string) => {
   const response = await axiosWithCredentials
-    .get(`${COURSES_API}/${courseId}/modules`);
+    .get(`${MODULES_API}/${courseId}/modules`);
   return response.data;
 };
 
@@ -187,5 +203,6 @@ export const unenrollFromCourse = async (userId: string, courseId: string) => {
  const response = await axiosWithCredentials.delete(`${USERS_API}/${userId}/courses/${courseId}`);
  return response.data;
 };
+
 
 

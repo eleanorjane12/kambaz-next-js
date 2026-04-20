@@ -4,8 +4,14 @@ import { useState } from "react";
 import { FormCheck } from "react-bootstrap";
 
 
-export default function MultipleChoiceQuestion({ question, index }: { question: any; index: number }) {
+export default function MultipleChoiceQuestion({ question, onAnswer, index }: { question: any; onAnswer: (questionId: string, answer: string) => void; index: number }) {
     const [selected, setSelected] = useState<string | null>(null);
+
+const handleSelect = (option: string) => {
+    const newSelected = option === selected ? null : option;
+    setSelected(newSelected);
+    if (newSelected) onAnswer?.(question._id, newSelected);
+  };
 
   return (
   <div key={question._id} className="p-3 "> 
@@ -14,12 +20,12 @@ export default function MultipleChoiceQuestion({ question, index }: { question: 
     </div>
     <div> {question.questionText} </div>
     {question.choices.map((option: any) => (
-    <div key={option} className="p-3 "> 
+    <div key={option} className=""> 
     <div className="fill-gray"> 
-
+        <hr/>
     <FormCheck type="radio" 
     name={question._id} label={option} checked={selected === option} 
-    onChange={() => setSelected(option === selected ? null : option)}/>
+    onChange={() => handleSelect(option)}/>
     </div>
     
     </div>
