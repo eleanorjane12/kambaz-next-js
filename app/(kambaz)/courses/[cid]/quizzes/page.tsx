@@ -12,6 +12,7 @@ import { RootState } from "../../../store";
 import * as client from "../../client";
 import { setQuizzes } from "./reducer";
 import { FaPlus } from "react-icons/fa6";
+import { v4 as uuidv4 } from "uuid";
 
 
 export default function Quizzes() {
@@ -24,6 +25,22 @@ const { cid } = useParams();
       const quizzes = await client.findQuizzesForCourse(cid as string);
       dispatch(setQuizzes(quizzes));
     };
+
+  const onCreateQuiz = async () => {
+  if (!cid) return;
+  const newQuiz = {
+    _id : uuidv4(),
+    title: "New Quiz",
+    course: cid,
+    points: 0,
+    dueDate: "",
+    untilDate: "",
+  };
+  const quiz = await client.createQuiz(cid as string, newQuiz);
+  dispatch(setQuizzes([...quizzes, quiz]));
+};
+
+    
     
 
     const [name, setName] = useState("");
@@ -48,7 +65,7 @@ const { cid } = useParams();
     <div id="headerbar">
       <FormControl onChange={(e) => filterQuizzesByName(e.target.value)} placeholder="Search quizzes"
              className="float-start w-25 me-2 ms-2 mt-2 wd-filter-by-name" />
-             <Button variant="danger" size="lg" className="me-4 float-end" id="wd-add-quiz-btn" >
+             <Button variant="danger" size="lg" className="me-4 float-end" id="wd-add-quiz-btn" onClick={onCreateQuiz}>
        <FaPlus className="position-relative me-2" style={{ bottom: "1px" }} />
        Quiz
      </Button>
