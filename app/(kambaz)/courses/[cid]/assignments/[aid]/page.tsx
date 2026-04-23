@@ -2,8 +2,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
 import { FormLabel, FormControl, Col, Row, FormSelect, FormCheck, Button } from "react-bootstrap";
-import { useParams } from "next/navigation";
-import { useSelector, useDispatch } from "react-redux";
+import { useParams, useRouter } from "next/navigation";
+import { useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import { RootState } from "../../../../store";
 import { setAssignments } from "../../assignments/reducer";
@@ -15,9 +15,8 @@ import { v4 as uuidv4 } from "uuid";
 export default function AssignmentEditor() {
     const { cid } = useParams();
     const { aid } = useParams();
-    const dispatch = useDispatch();
+    const router = useRouter();
     const { assignments } = useSelector((state: RootState) => state.assignmentsReducer);
-    const existingAssignment = assignments.find((a: any) => a._id === aid);
     const [assignment, setAssignment] = useState<any>({
     _id: uuidv4(),
     title: "New Assignment",
@@ -28,37 +27,31 @@ export default function AssignmentEditor() {
     course: cid,
   });
 
-  useEffect(() => {
-    const existing = assignments.find((a: any) => a._id === aid);
-    if (existing) setAssignment(existing);
-  }, [assignments]);
 
 
-const onSave = async () => {
-    const existing = assignments.find((a: any) => a._id === aid);
-  if (existing) {
-    await client.updateAssignment(assignment);
-    dispatch(setAssignments(assignments.map((a: any) =>
-      a._id === assignment._id ? assignment : a
-    )));
-  } else {
-    const newAssignment = await client.createAssignmentForCourse(cid as string, assignment);
-    dispatch(setAssignments([...assignments, newAssignment]));
-  }
-};
 
-      const onUpdateAssignment = async (assignment: any) => {
+const fetchAssignment = async () => {
+    if (aid && aid !== "new") {
+      const data = await client.findAssignmentsForCourse(cid as string);
+      const existing = data.find((a: any) => a._id === aid);
+      if (existing) setAssignment(existing);
+    }
+  };
+
+
+
+  const onSave = async () => {
+    if (aid && aid !== "new") {
       await client.updateAssignment(assignment);
-      const newAssignments = assignments.map((a: any) => a._id === assignment._id ? assignment : a );
-      dispatch(setAssignments(newAssignments));
-      
-    };
-    const onCreateAssignmentForCourse = async () => {
-          if (!cid) return;
-          const newAssignment = { name: assignment, course: cid };
-          const mod = await client.createAssignmentForCourse(cid as string, newAssignment);
-          dispatch(setAssignments([...assignments, mod]));
-        };
+    } else {
+      await client.createAssignmentForCourse(cid as string, assignment);
+    }
+    router.push(`/courses/${cid}/assignments`);
+  };
+
+     useEffect(() => {
+    fetchAssignment();
+  }, [aid]);
 
  return (
     <div  id="wd-assignment-editor"> 

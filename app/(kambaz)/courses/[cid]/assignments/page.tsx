@@ -1,52 +1,63 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
 import Link from "next/link";
 import * as client from "../../client";
-import { useParams } from "next/navigation";
 import AssignmentControls from "./assignmentControls";
 import { ListGroup, ListGroupItem } from "react-bootstrap";
-import { BsGripVertical } from "react-icons/bs";
-import LessonControlButtons from "../modules/LessonControlButtons";
 import AssignmentControlButtons from "./assignmentControlButtons";
 import { MdOutlineAssignment } from "react-icons/md";
-import { useDispatch, useSelector } from "react-redux";
-import { setAssignments } from "./reducer";
-import { useState, useEffect } from "react";
-import { RootState } from "../../../store";
 import AssignmentIndividualButtons from "./AssignmentIndividualButtons";
-
+import { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
+import { useSelector } from "react-redux";
+import { BsGripVertical} from "react-icons/bs";
+import { RootState } from "../../../store";
+import { v4 as uuidv4 } from "uuid";
 
 export default function Assignments() {
   const { cid } = useParams();
-  const dispatch = useDispatch();
-  const { assignments } = useSelector((state: RootState) => state.assignmentsReducer);
-
-  const [assignmentName, setAssingmentName] = useState("");
+  const { currentUser } = useSelector((state: RootState) => state.accountReducer);
+  const isFaculty = currentUser?.role === "FACULTY";
+  const [assignments, setAssignments] = useState<any[]>([]);
 
   const fetchAssignments = async () => {
-      const assignments = await client.findAssignmentsForCourse(cid as string);
-      dispatch(setAssignments(assignments));
-    };
-    const onCreateAssignmentForCourse = async () => {
-      if (!cid) return;
-      const newAssignment = { name: assignmentName, course: cid };
-      const mod = await client.createAssignmentForCourse(cid as string, newAssignment);
-      dispatch(setAssignments([...assignments, mod]));
-    };
-     const onRemoveAssignment = async (assignmentId: string) => {
-      await client.deleteAssignment(assignmentId);
-      dispatch(setAssignments(assignments.filter((m: any) => m._id !== assignmentId)));
-    };
+    const data = await client.findAssignmentsForCourse(cid as string);
+    setAssignments(data);
+  };
+  const onCreateAssignment = async () => {
+  if (!cid) return;
+  const newAssignment = {
+    _id : uuidv4(),
+    title: "New Assignment",
+    description: "",
+    points: 0,
+    dueDate: "",
+    availableFrom: "",
+    availableUntil: "",
+    course: cid,
+  };
+  const assignment = await client.createAssignmentForCourse(cid as string, newAssignment);
+  setAssignments([...assignments, assignment]);
+};
 
-    
-    useEffect(() => {
+  const onDelete = async (assignmentId: string) => {
+    if (window.confirm("Delete?")) {
+      await client.deleteAssignment(assignmentId);
+      setAssignments(assignments.filter((a) => a._id !== assignmentId));
+    }
+  };
+
+  useEffect(() => {
     fetchAssignments();
-  }, []);
+  }, [cid]);
   
 
  return (
   <div id="wd-assignments" >
-    <AssignmentControls />
+    
+
+    <AssignmentControls onCreateAssignment={onCreateAssignment} isFaculty={isFaculty} />
     <ListGroup className="rounded-0" id="wd-modules">
     <ListGroupItem className="wd-module p-0 mb-5 fs-5 border-gray">
       <div className="wd-title p-3 ps-2 bg-secondary"> 
@@ -74,7 +85,7 @@ export default function Assignments() {
 
     <div className="ms-auto">
       <AssignmentIndividualButtons assignmentId={assignment._id}
-                      deleteAssignment={(id) => onRemoveAssignment(id)}/>
+                      deleteAssignment={(id) => onDelete(id)}/>
     </div>
     </ListGroupItem>
 ))}
