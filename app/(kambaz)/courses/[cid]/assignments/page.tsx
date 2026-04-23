@@ -17,7 +17,7 @@ import { v4 as uuidv4 } from "uuid";
 
 export default function Assignments() {
   const { cid } = useParams();
-  const { currentUser } = useSelector((state: RootState) => state.accountReducer);
+  const { currentUser } = useSelector((state: RootState) => state.accountReducer) as { currentUser: { role: string } | null };
   const isFaculty = currentUser?.role === "FACULTY";
   const [assignments, setAssignments] = useState<any[]>([]);
 
